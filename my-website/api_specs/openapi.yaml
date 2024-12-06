@@ -1,0 +1,377 @@
+openapi: 3.0.3
+info:
+  title: Спецификация для курсовой
+  version: 1.0.0
+servers:
+  - url: 'https://api.server.test/v1'
+tags:
+  - name: Events
+    description: Методы работы с мероприятиями
+  - name: Users
+    description: Методы работы с пользователями
+paths:
+  /events/{id}/register:
+    post:
+      tags:
+        - Events
+      summary: Зарегистрироваться на мероприятие
+      operationId: registerEvent
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: id мероприятия, на которое происходит регистрация
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '201':
+          description: Успешная регистрация
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RegisteredUser'
+        '403':
+          description: Нет прав на регистрацию
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorStructure'
+        '500':
+          description: Внутренняя ошибка
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorStructure'
+    delete:
+      tags:
+        - Events
+      summary: Отмена регистрации на мероприятие
+      operationId: cancelRegister
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/Event'
+        - name: id
+          in: query
+          required: true
+          schema:
+            $ref: '#/components/schemas/RegisteredUser'
+      responses:
+        '204':
+          description: Успешная отмена регистрации
+        '403':
+          description: Нет прав на отмену регистрации
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorStructure'
+        '404':
+          description: Регистрация на мероприятие не найдена
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorStructure'
+        '500':
+          description: Внутренняя ошибка
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorStructure'
+  /events:
+    get:
+      tags:
+        - Events
+      summary: Просмотр ленты мероприятий
+      operationId: viewListEvents
+      parameters:
+        - name: pagination
+          in: query
+          required: true
+          description: Параметры пагинации
+          schema:
+            $ref: '#/components/schemas/Pagination'
+      responses:
+        '200':
+          description: Успешный просмотр ленты
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  events:
+                    type: array
+                    description: Массив мероприятий
+                    items:
+                      $ref: '#/components/schemas/Event'
+                  pagination:
+                    allOf:
+                      - $ref: '#/components/schemas/Pagination'
+                      - type: object
+                        properties:
+                          totalRecords:
+                            type: integer
+                            example: 1000
+                            description: Количество записей всего
+        '500':
+          description: Внутренняя ошибка
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorStructure'
+  /events/{id}:
+    get:
+      tags:
+        - Events
+      summary: Посмотреть карточку мероприятия
+      operationId: viewEvent
+      parameters:
+        - in: path
+          name: id
+          description: id мероприятия
+          required: true
+          schema:
+            $ref: '#/components/schemas/Event'
+      responses:
+        '200':
+          description: Мероприятие найдено
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/Event'
+                  - $ref: '#/components/schemas/DescriptionEvent'
+                  - $ref: '#/components/schemas/InfoEvent'
+        '404':
+          description: Мероприятие не найдено
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorStructure'
+        '500':
+          description: Внутренняя ошибка
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorStructure'
+  /users/{id}:
+    patch:
+      tags:
+        - Users
+      summary: Редактировать профиль пользователя
+      operationId: editProfile
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Уникальный идентификатор пользователя.
+          schema:
+            $ref: '#/components/schemas/User'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '200':
+          description: Изменение успешно
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          description: Некорректный ввод
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorStructure'
+        '404':
+          description: Пользователь не найден
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorStructure'
+        '500':
+          description: Внутренняя ошибка
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorStructure'
+    delete:
+      tags:
+        - Users
+      summary: Удаление профиля пользователя
+      operationId: deleteProfile
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/User'
+      responses:
+        '204':
+          description: Успешное удаление профиля
+        '403':
+          description: Нет прав на удаление профиля
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorStructure'
+        '404':
+          description: Профиль не найден
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorStructure'
+        '500':
+          description: Внутренняя ошибка
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorStructure'
+components:
+  schemas:
+    Event:
+      type: object
+      description: Мероприятие
+      required:
+        - id
+        - name
+        - location
+        - date
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: d290f1ee-6c54-4b01-90e6-d701748f0851
+          description: Уникальный идентификатор мероприятия
+        name:
+          type: string
+          example: New Event
+          description: Название мероприятия
+        location:
+          type: string
+          example: Right place
+          description: Место проведения
+        date:
+          type: string
+          format: date-time
+          example: '2024-12-16T09:00:00.001Z'
+          description: Дата мероприятия
+        id_manager:
+          $ref: '#/components/schemas/InfoEvent'
+    DescriptionEvent:
+      type: object
+      description: Описание мероприятия
+      required:
+        - description
+      properties:
+        description:
+          type: string
+          example: Lorem ipsum dolor sit amet
+          description: Описание мероприятия
+        id_event:
+          $ref: '#/components/schemas/Event'
+    InfoEvent:
+      type: object
+      description: Информация об организаторе
+      required:
+        - name
+        - description
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: d200a1aa-7b32-4b22-90e6-d801848a2343
+          description: Уникальный идентификатор организатора
+        name:
+          type: string
+          example: Manager
+          description: Имя организатора
+        description:
+          type: string
+          example: Lorem ipsum dolor sit amet
+          description: Информация об организаторе
+    User:
+      type: object
+      description: Пользователь системы
+      required:
+        - idUser
+        - name
+        - e-mail
+        - role
+      properties:
+        idUser:
+          type: string
+          format: uuid
+          example: d290f1ee-6c54-4b01-90e6-d701748f0851
+          description: Уникальный идентификатор пользователя
+        name:
+          type: string
+          example: Jane
+          description: Имя пользователя
+        e-mail:
+          type: string
+          example: qwerty@mail.com
+          description: Адрес эл.почты пользователя
+        role:
+          type: string
+          description: Роли пользователя
+          enum:
+            - участник
+            - организатор
+    RegisteredUser:
+      type: array
+      description: Список пользователей зарегистрированных на мероприятии
+      items:
+        allOf:
+          - type: object
+            properties:
+              idEvent:
+                type: string
+                format: uuid
+                description: Уникальный идентификатор мероприятия
+          - $ref: '#/components/schemas/User'
+    Pagination:
+      type: object
+      description: Объект пагинации
+      required:
+        - pageIndex
+        - recordsPerPage
+      properties:
+        pageIndex:
+          type: integer
+          example: 1
+          description: Кол-во страниц
+        recordsPerPage:
+          type: integer
+          example: 10
+          description: Кол-во записей
+    ErrorStructure:
+      type: object
+      properties:
+        error:
+          type: string
+          description: Код ошибки
+        message:
+          type: string
+          description: Сообщение об ошибке
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
