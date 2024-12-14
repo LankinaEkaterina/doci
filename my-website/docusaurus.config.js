@@ -42,7 +42,7 @@ const config = {
       {
         specs: [
           {
-            id: 'event1',
+            id: 'event',
             spec: 'api_specs/openapi.yaml',
           },
         ],

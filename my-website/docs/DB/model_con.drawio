@@ -1,0 +1,46 @@
+<mxfile host="65bd71144e">
+    <diagram id="Y2mU64GmPJBt0znP8kX3" name="Страница — 1">
+        <mxGraphModel dx="734" dy="214" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="2" value="Организатор" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=50;horizontalStack=0;rounded=1;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=0;dashed=0;align=center;arcSize=4;whiteSpace=wrap;html=1;container=0;" parent="1" vertex="1">
+                    <mxGeometry x="79" y="65" width="180" height="180" as="geometry">
+                        <mxRectangle x="330" y="210" width="80" height="50" as="alternateBounds"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="3" value="Наименование&lt;br&gt;&lt;div&gt;E-mail&lt;/div&gt;&lt;div&gt;Номер телефона&lt;/div&gt;&lt;div&gt;Информация об организаторе&lt;br&gt;&lt;/div&gt;" style="align=left;strokeColor=none;fillColor=none;spacingLeft=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;html=1;" parent="2" vertex="1">
+                    <mxGeometry y="50" width="180" height="130" as="geometry"/>
+                </mxCell>
+                <mxCell id="4" value="Участник" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=50;horizontalStack=0;rounded=1;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=0;dashed=0;align=center;arcSize=4;whiteSpace=wrap;html=1;container=0;" parent="1" vertex="1">
+                    <mxGeometry x="550" y="65" width="170" height="180" as="geometry">
+                        <mxRectangle x="330" y="210" width="80" height="50" as="alternateBounds"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="5" value="ФИО&lt;br&gt;E-mail&lt;br&gt;&lt;div&gt;Пол&lt;/div&gt;&lt;div&gt;Дата рождения&lt;br&gt;&lt;/div&gt;" style="align=left;strokeColor=none;fillColor=none;spacingLeft=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;html=1;" parent="4" vertex="1">
+                    <mxGeometry y="50" width="170" height="130" as="geometry"/>
+                </mxCell>
+                <mxCell id="6" value="Мероприятие" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=50;horizontalStack=0;rounded=1;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=0;dashed=0;align=center;arcSize=4;whiteSpace=wrap;html=1;container=0;" parent="1" vertex="1">
+                    <mxGeometry x="316" y="65" width="170" height="180" as="geometry">
+                        <mxRectangle x="330" y="210" width="80" height="50" as="alternateBounds"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="7" value="Название &lt;br&gt;Дата проведения&lt;br&gt;Место проведения&lt;br&gt;Описание&lt;br&gt;&lt;div&gt;Макс. кол-во участников&lt;/div&gt;&lt;div&gt;Статус&lt;br&gt;&lt;/div&gt;" style="align=left;strokeColor=none;fillColor=none;spacingLeft=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;html=1;" parent="6" vertex="1">
+                    <mxGeometry y="50" width="170" height="130" as="geometry"/>
+                </mxCell>
+                <mxCell id="8" value="" style="edgeStyle=orthogonalEdgeStyle;fontSize=12;html=1;endArrow=ERzeroToMany;endFill=1;startArrow=ERzeroToMany;rounded=0;entryX=0;entryY=0.25;entryDx=0;entryDy=0;exitX=1;exitY=0.25;exitDx=0;exitDy=0;" parent="1" source="7" target="5" edge="1">
+                    <mxGeometry width="100" height="100" relative="1" as="geometry">
+                        <mxPoint x="333" y="265" as="sourcePoint"/>
+                        <mxPoint x="433" y="165" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="9" value="" style="fontSize=12;html=1;endArrow=ERzeroToMany;startArrow=ERmandOne;rounded=0;exitX=1;exitY=0.25;exitDx=0;exitDy=0;entryX=0;entryY=0.25;entryDx=0;entryDy=0;" parent="1" source="3" target="7" edge="1">
+                    <mxGeometry width="100" height="100" relative="1" as="geometry">
+                        <mxPoint x="333" y="265" as="sourcePoint"/>
+                        <mxPoint x="433" y="165" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>

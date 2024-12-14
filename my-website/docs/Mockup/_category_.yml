@@ -1,0 +1,7 @@
+position: 3
+label: MockUp
+collapsible: true
+collapsed: true
+link:
+  type: generated-index
+  title: Макет интерфейса
